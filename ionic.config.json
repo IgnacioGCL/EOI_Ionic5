@@ -1,0 +1,7 @@
+{
+  "name": "New_Blog_EOI1",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
