@@ -1,13 +1,6 @@
 # EOI-Ionic 5
 
-<div style="display:flex; align-items:center; justify-content: center;">
-    <img style="height: 100px; " src="https://ionicframework.com/img/meta/logo.png"/>
-    <img style="margin-left: 50px;height: 100px; " src="https://brandslogos.com/wp-content/uploads/thumbs/angular-logo-vector.svg"/>
-</div>
-    <br>
-
 Proyecto de ejemplo para el curso FullStack de la E.O.I. En esta aplicación, se muestra un listado de posts utilizando elementos visuales de Ionic, además de poder agregar más posts haciendo uso de elmentos nativos como la cámara.
-
 
 ## Tabla de contenidos
  - [Pasos previos](#pasos-previos)
