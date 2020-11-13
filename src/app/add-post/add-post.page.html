@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Añadir post
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Añadir post</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <form (ngSubmit)="uploadForm()" [formGroup]="postForm" id="post-form">
+
+    <div *ngIf="!postImage" class="take-picture">
+      <ion-fab-button (click)="takePicture()">
+        <ion-icon name="camera-outline"></ion-icon>
+      </ion-fab-button>
+    </div>
+
+    <div *ngIf="postImage" class="image-taken">
+      <ion-fab-button size="small" (click)="deletePicture()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-img [src]="postImage"></ion-img>
+    </div>
+
+    <ion-item>
+      <ion-label>Título</ion-label>
+      <ion-input type="text" formControlName="titulo"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Autor</ion-label>
+      <ion-input type="text" formControlName="autor"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Descripción</ion-label>
+      <ion-input formControlName="descripcionCorta"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Contenido</ion-label>
+      <ion-textarea formControlName="descripcion"></ion-textarea>
+    </ion-item>
+    <ion-button expand="full" [disabled]="postForm.invalid" type="submit">Subir post</ion-button>
+  </form>
+
+</ion-content>

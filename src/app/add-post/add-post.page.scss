@@ -1,0 +1,28 @@
+#post-form{
+    margin-top: 20px;
+}
+
+.take-picture {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    ion-button {
+        border-radius: 50%;
+
+    }
+}
+
+.image-taken {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+    ion-fab-button {
+        position: absolute;
+        top: 10px;
+        left: 0;
+    }
+    ion-img{
+        height: 100%;
+    }
+}
