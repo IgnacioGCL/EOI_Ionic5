@@ -1,5 +1,11 @@
 # EOI-Ionic 5
 
+<div style="display:flex; align-items:center; justify-content: center;">
+    <img style="height: 100px; " src="https://ionicframework.com/img/meta/logo.png"/>
+    <img style="margin-left: 50px;height: 100px; " src="https://brandslogos.com/wp-content/uploads/thumbs/angular-logo-vector.svg"/>
+</div>
+    <br>
+
 Proyecto de ejemplo para el curso FullStack de la E.O.I. En esta aplicación, se muestra un listado de posts utilizando elementos visuales de Ionic, además de poder agregar más posts haciendo uso de elmentos nativos como la cámara.
 
 
@@ -11,6 +17,7 @@ Proyecto de ejemplo para el curso FullStack de la E.O.I. En esta aplicación, se
     * [Añadir plataformas](#añadir-plataformas)
     * [Abrir IDE](#abrir-ide)
     * [Refrescar cambios](#refrescar-cambios)
+ - [Documentación](#documentación)
 
 ## Pasos previos
 
@@ -95,3 +102,16 @@ A medida que vayamos haciendo cambios, querremos ir viendo estas modificaciones 
 ```shell
 $ ionic cap copy
 ```
+
+## Documentación
+
+Documentación de: 
+- <a href="https://ionicframework.com/docs">Ionic-Angular</a>
+
+Componentes viusales:
+
+- <a href="https://ionicframework.com/docs/components">Componentes Ionic</a>
+
+Más información para compilar en Android e iOS:
+- <a href="https://ionicframework.com/docs/developing/android">Android</a>
+- <a href="https://ionicframework.com/docs/developing/ios">iOS</a>
