@@ -19,7 +19,7 @@
       <p>Imposible cargar los posts</p>
   </section>
 
-  <ion-card *ngFor="let post of posts" button (click)="goToPost(post.id)">
+  <ion-card *ngFor="let post of posts" button (click)="goToPost(post.url)">
     <ion-img [src]="post.fotoUrl"></ion-img>
     <ion-card-header>
       <ion-card-subtitle>{{post.autor}}</ion-card-subtitle>

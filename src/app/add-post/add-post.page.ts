@@ -1,26 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { PostService } from '@api/post/post.service';
 import { CameraService } from '@services/camera/camera.service';
-import { NavController } from '@ionic/angular';
+import { NavController, LoadingController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-add-post',
   templateUrl: 'add-post.page.html',
   styleUrls: ['add-post.page.scss']
 })
-export class AddPostPage implements OnInit {
+export class AddPostPage implements OnInit, OnDestroy {
 
   public postForm: FormGroup;
   public postImage: string;
   private formSubscription: Subscription;
+  private uploadTaskSubscription: Subscription;
 
   constructor(
     private cameraService: CameraService,
     private fb: FormBuilder,
     private postService: PostService,
-    private navCtrl: NavController) { }
+    private navCtrl: NavController,
+    private loadingController: LoadingController) { }
 
   public ngOnInit(): void {
     this.postForm = this.fb.group({
@@ -29,9 +32,14 @@ export class AddPostPage implements OnInit {
       fotoUrl: this.fb.control('', [Validators.required]),
       descripcionCorta: this.fb.control('', [Validators.required]),
       descripcion: this.fb.control('', [Validators.required]),
-      id: this.fb.control(''),
       url: this.fb.control('')
     });
+  }
+
+  public ngOnDestroy(): void {
+    if (this.uploadTaskSubscription) {
+      this.uploadTaskSubscription.unsubscribe();
+    }
   }
 
   public ionViewDidLeave(): void {
@@ -40,17 +48,22 @@ export class AddPostPage implements OnInit {
   }
 
   public async uploadForm(): Promise<void> {
+    const loading = await this.loadingController.create({ message: 'Subiendo post' });
+    await loading.present();
     const url = this.getUrl(this.postForm.value.titulo);
-    const b64Image = await this.cameraService.convertImageToB64(this.postForm.value.fotoUrl);
-    this.postForm.patchValue({
-      id: url,
-      url,
-      fotoUrl: b64Image
-    });
-    this.formSubscription = this.postService.uploadPost(this.postForm.value).subscribe(() => {
-      this.postForm.reset();
-      this.navCtrl.navigateRoot('/tabs/posts');
-    });
+    const blob = await this.cameraService.getBlob(this.postForm.value.fotoUrl);
+    const uploadTask = this.postService.uploadImage(`${url}-photo`, blob);
+    const storageUrl = await (await uploadTask).ref.getDownloadURL();
+
+    this.postForm.patchValue({ url, fotoUrl: storageUrl });
+
+    await this.postService.uploadPost(this.postForm.value);
+
+    await loading.dismiss();
+
+    this.postForm.reset();
+    this.navCtrl.navigateRoot('/tabs/posts');
+
   }
 
   public takePicture(): void {

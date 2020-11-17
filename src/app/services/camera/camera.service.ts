@@ -18,21 +18,10 @@ export class CameraService {
     });
   }
 
-  public async convertImageToB64(webPath: string): Promise<string | ArrayBuffer> {
+  public async getBlob(webPath: string): Promise<Blob>{
     const response = await fetch(webPath);
     const blob = await response.blob();
-
-    return this.convertBlobToBase64(blob);
+    return blob;
   }
 
-  private convertBlobToBase64(blob: Blob): Promise<string | ArrayBuffer> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onerror = reject;
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-      reader.readAsDataURL(blob);
-    });
-  }
 }

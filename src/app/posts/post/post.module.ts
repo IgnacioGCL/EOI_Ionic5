@@ -17,4 +17,4 @@ import { PostPage } from './post.page';
   ],
   declarations: [PostPage]
 })
-export class PostPageModule {}
+export class PostPageModule { }

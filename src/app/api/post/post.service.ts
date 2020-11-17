@@ -1,29 +1,37 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from '@env/environment';
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Post } from '@models';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  constructor(private http: HttpClient) { }
+  private postsCollections: AngularFirestoreCollection<Post>;
 
-  public getPosts(): Observable<Post[]> {
-    return this.http.get(`${environment.backUrl}/posts`) as Observable<Post[]>;
+  constructor(
+    private db: AngularFirestore,
+    private storage: AngularFireStorage
+  ) {
+    this.postsCollections = this.db.collection<Post>('posts');
   }
 
-  public getPost(id: string): Observable<Post> {
-    return this.http.get(`${environment.backUrl}/posts`, {
-      params: {
-        id
-      }
-    }) as Observable<Post>;
+  public getPosts(): AngularFirestoreCollection<Post> {
+    return this.postsCollections;
   }
 
-  public uploadPost(post: Post): Observable<Post> {
-    return this.http.post(`${environment.backUrl}/posts`, post) as Observable<Post>;
+  public getPost(id: string): AngularFirestoreDocument<Post> {
+    return this.db.doc<Post>(`posts/${id}`);
   }
+
+  public uploadPost(post: Post): Promise<void> {
+    return this.postsCollections.doc(post.url).set(post);
+  }
+
+  public uploadImage(fileName: string, blob: Blob): AngularFireUploadTask {
+    const ref = this.storage.ref(fileName);
+    return ref.put(blob);
+  }
+
 }

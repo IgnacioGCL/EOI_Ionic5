@@ -4,7 +4,16 @@
 
 export const environment = {
   production: false,
-  backUrl: 'http://localhost:3000'
+  backUrl: 'http://localhost:3000',
+  firebaseConfig: {
+    apiKey: 'AIzaSyCu3rk04KXFsyr2senSThmFR100QEooMv0',
+    authDomain: 'blog-eoi-fullstack.firebaseapp.com',
+    databaseURL: 'https://blog-eoi-fullstack.firebaseio.com',
+    projectId: 'blog-eoi-fullstack',
+    storageBucket: 'blog-eoi-fullstack.appspot.com',
+    messagingSenderId: '738494127544',
+    appId: '1:738494127544:web:ced40725ea202af503834d'
+  }
 };
 
 /*

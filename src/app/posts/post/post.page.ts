@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from 'src/app/models';
-import { map } from 'rxjs/operators';
+import { concatMap } from 'rxjs/operators';
 import { LoadingController } from '@ionic/angular';
 import { PostService } from '@api/post/post.service';
 import { Subscription } from 'rxjs';
@@ -16,7 +16,7 @@ import { Subscription } from 'rxjs';
 export class PostPage implements OnInit, OnDestroy {
 
   public post: Post;
-  private $getPostSubscription: Subscription;
+  private getPostSubscription: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,18 +31,17 @@ export class PostPage implements OnInit, OnDestroy {
     });
     await loading.present();
 
-    this.activatedRoute.params.subscribe(({ id }) => {
-      this.$getPostSubscription = this.postService.getPost(id).pipe(map(posts => posts[0])).subscribe(async (post) => {
-        await loading.dismiss();
-        this.post = post;
-      });
+    this.getPostSubscription = this.activatedRoute.params.pipe(
+      concatMap(({ id }) => this.postService.getPost(id).valueChanges())
+    ).subscribe(async (post) => {
+      await loading.dismiss();
+      this.post = post;
     });
-
   }
 
   public ngOnDestroy(): void {
-    if (this.$getPostSubscription) {
-      this.$getPostSubscription.unsubscribe();
+    if (this.getPostSubscription) {
+      this.getPostSubscription.unsubscribe();
     }
   }
 
