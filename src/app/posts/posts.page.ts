@@ -45,7 +45,6 @@ export class PostsPage implements OnInit, OnDestroy {
   }
 
   public goToPost(id: string): void {
-    console.log(id);
     this.navCtrl.navigateForward(['tabs', 'posts', id]);
   }
 

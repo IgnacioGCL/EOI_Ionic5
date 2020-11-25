@@ -15,7 +15,6 @@ export class AddPostPage implements OnInit, OnDestroy {
 
   public postForm: FormGroup;
   public postImage: string;
-  private formSubscription: Subscription;
   private uploadTaskSubscription: Subscription;
 
   constructor(
@@ -44,7 +43,6 @@ export class AddPostPage implements OnInit, OnDestroy {
 
   public ionViewDidLeave(): void {
     this.postForm.reset();
-    if (this.formSubscription) { this.formSubscription.unsubscribe(); }
   }
 
   public async uploadForm(): Promise<void> {
